@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dip"
+    android:orientation="horizontal"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/welcomeET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        />
+
+    <Button
+        android:id="@+id/navigationButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/welcomeET"
+        android:text="navigation"
+        />
+    <Button
+        android:id="@+id/informationButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/navigationButton"
+        android:text="information"
+        />
+    <Button
+        android:id="@+id/shuttlesButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/informationButton"
+        android:text="shuttles"
+        />
+    <Button
+        android:id="@+id/adminOptionsBT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shuttlesButton"
+        android:text="admin"
+        android:visibility="invisible"
+        />
+    <Button
+        android:id="@+id/disconnectBT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/adminOptionsBT"
+        android:text="disconnect"
+        />
+
+</RelativeLayout>
