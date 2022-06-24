@@ -18,45 +18,42 @@ public class InformationHandler {
 
     //Adding the information from the DB to the list
     public static boolean initializeInformation(Context c) {
-        if (info == null) {
-            info = new ArrayList();
-            namesList = new ArrayList();
-            myDB = new DatabaseHandler(c);
+        info = new ArrayList();
+        namesList = new ArrayList();
+        myDB = new DatabaseHandler(c);
 
-            services_names = new String[]{
-                    "כל השירותים", "בנייני לימוד", "ספריות", "שערים","תחנות שאטל", "עמדות מים", "מקררים", "מיקרוגלים"
-                    , "מעונות", "מתקני ספורט", "מרכזי הופעות ואירועים", "מגרשי חנייה", "מסעדות", "בתי קפה"
-            };
+        services_names = new String[]{
+                "כל השירותים", "בנייני לימוד", "ספריות", "שערים","תחנות שאטל", "עמדות מים", "מקררים", "מיקרוגלים"
+                , "מעונות", "מתקני ספורט", "מרכזי הופעות ואירועים", "מגרשי חנייה", "מסעדות", "בתי קפה"
+        };
 
-            types = new String[]{
-                    "All", "building", "library", "gate", "shuttle", "water", "refrigerator", "microwave"
-                    , "dorms", "sports", "amphitheater", "parking", "restaurant", "coffee"
-            };
-
-
-            Cursor cursor = myDB.getAllMarkers();
-            if (cursor == null) {
-                cursor = myDB.getAllMarkers();
-            }
-
-            Context initilizedContext = c;
-
-            //INIT INFORMATION
-            if (cursor != null) {
-                do {
-                    info.add(new Information(new LatLng(cursor.getDouble(2), cursor.getDouble(3)), cursor.getString(1), cursor.getString(0), cursor.getString(4)));
-                    namesList.add(cursor.getString(0));
+        types = new String[]{
+                "All", "building", "library", "gate", "shuttle", "water", "refrigerator", "microwave"
+                , "dorms", "sports", "amphitheater", "parking", "restaurant", "coffee"
+        };
 
 
-                } while (cursor.moveToNext());
-
-                return true;
-
-            } else {
-                return false;
-            }
+        Cursor cursor = myDB.getAllMarkers();
+        if (cursor == null) {
+            cursor = myDB.getAllMarkers();
         }
-        return true;
+
+        Context initilizedContext = c;
+
+        //INIT INFORMATION
+        if (cursor != null) {
+            do {
+                info.add(new Information(new LatLng(cursor.getDouble(2), cursor.getDouble(3)), cursor.getString(1), cursor.getString(0), cursor.getString(4)));
+                namesList.add(cursor.getString(0));
+
+
+            } while (cursor.moveToNext());
+
+            return true;
+
+        } else {
+            return false;
+        }
     }
 
     public static String[] getFields() {
