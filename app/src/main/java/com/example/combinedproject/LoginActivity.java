@@ -158,6 +158,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(getApplicationContext(), com.example.combinedproject.MainActivity.class);
                     intent.putExtra("name", googleName);
+                    intent.putExtra("user_type", "regular");
+                    intent.putExtra("username", googleEmail);
                     startActivityForResult(intent, 1);
                     //Toast.makeText(getBaseContext(), personName + " " + personEmail,
                     //        Toast.LENGTH_LONG).show();

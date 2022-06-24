@@ -120,8 +120,6 @@ public class BIUNavigationActivity extends AppCompatActivity implements OnMapRea
                     Toast.LENGTH_LONG).show();
         }
 
-        startNavigationButton = findViewById(R.id.navigationBT);
-
         //create the tabLayout for choosing the route type
         String[] tabsTitles = {"cycling","driving","walking"};
         int[] tabsIcons = {R.drawable.cycling, R.drawable.driving, R.drawable.walking};
@@ -159,6 +157,7 @@ public class BIUNavigationActivity extends AppCompatActivity implements OnMapRea
             public void onTabReselected(TabLayout.Tab tab) { }
         });
 
+        startNavigationButton = findViewById(R.id.navigationBT);
         //start the navigation when the navigation button is clicked
         startNavigationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -232,48 +231,49 @@ public class BIUNavigationActivity extends AppCompatActivity implements OnMapRea
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 //if checked - the origin location will be the current location + adding the marker on the map
                 if(b){
-                    double userLongitude = currentLocation.getLongitude();
-                    double userLatitude = currentLocation.getLatitude();
+                    if(currentLocation != null){
+                        double userLongitude = currentLocation.getLongitude();
+                        double userLatitude = currentLocation.getLatitude();
 
-                    //in BIU range(legal current location)
-                    if((userLongitude >= BIUMinLongitude && userLongitude <= BIUMaxLongitude)
-                            && (userLatitude >=BIUMinLatitude && userLatitude <= BIUMaxLatitude)){
-                        srcET.setText("מיקום נוכחי");
-                        srcET.setEnabled(false);
-                        if(originMarker != null)
-                        {
-                            map.removeMarker(originMarker);
-                        }
-
-                        originMarker = map.addMarker(new MarkerOptions()
-                                .position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()))
-                                .icon(srcIC));
-                        originPosition = Point.fromLngLat(currentLocation.getLongitude(), currentLocation.getLatitude());
-
-                        Location originLocation = new Location("");
-                        originLocation.setLatitude(originPosition.latitude());
-                        originLocation.setLongitude(originPosition.longitude());
-                        setCameraPosition(originLocation);
-
-                        //origin and destination aren't null => a route is displayed on the map(updating the route)
-                        if(originPosition != null && destinationPosition != null)
-                        {
-                            routeHandler(originPosition, destinationPosition, false);
-
-                            //enabling the navigation button if a route is displayed + the origin location is the current location
-                            if(cb.isChecked())
+                        //in BIU range(legal current location)
+                        if((userLongitude >= BIUMinLongitude && userLongitude <= BIUMaxLongitude)
+                                && (userLatitude >=BIUMinLatitude && userLatitude <= BIUMaxLatitude)){
+                            srcET.setText("מיקום נוכחי");
+                            srcET.setEnabled(false);
+                            if(originMarker != null)
                             {
-                                startNavigationButton.setEnabled(true);
+                                map.removeMarker(originMarker);
+                            }
+
+                            originMarker = map.addMarker(new MarkerOptions()
+                                    .position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()))
+                                    .icon(srcIC));
+                            originPosition = Point.fromLngLat(currentLocation.getLongitude(), currentLocation.getLatitude());
+
+                            Location originLocation = new Location("");
+                            originLocation.setLatitude(originPosition.latitude());
+                            originLocation.setLongitude(originPosition.longitude());
+                            setCameraPosition(originLocation);
+
+                            //origin and destination aren't null => a route is displayed on the map(updating the route)
+                            if(originPosition != null && destinationPosition != null)
+                            {
+                                routeHandler(originPosition, destinationPosition, false);
+
+                                //enabling the navigation button if a route is displayed + the origin location is the current location
+                                if(cb.isChecked())
+                                {
+                                    startNavigationButton.setEnabled(true);
+                                }
                             }
                         }
-                    }
 
-                    else {
-                        Toast.makeText(getBaseContext(), "Invalid Current Location - It Is Not In BIU Area",
-                                Toast.LENGTH_LONG).show();
-                        cb.setChecked(false);
+                        else {
+                            Toast.makeText(getBaseContext(), "Invalid Current Location - It Is Not In BIU Area",
+                                    Toast.LENGTH_LONG).show();
+                            cb.setChecked(false);
+                        }
                     }
-
                 }
 
                 //if unchecked - removing the origin marker from the map and setting it to null
@@ -404,7 +404,6 @@ public class BIUNavigationActivity extends AppCompatActivity implements OnMapRea
 
     //if the location permission is enabled - initializing the current location and some settings
     private void enableLocation(){
-        CheckBox cb = findViewById(R.id.currentLocationCB);
         //if the location permission accepted - allowing to use the current location
         if(PermissionsManager.areLocationPermissionsGranted(this))
         {

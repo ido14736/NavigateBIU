@@ -32,7 +32,7 @@
         android:layout_marginTop="45dp">
 
         <CheckBox
-            android:id="@+id/currentLocationCB"
+            android:id="@+id/shuttlesCurrentLocationCB"
             android:layout_width="96dp"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

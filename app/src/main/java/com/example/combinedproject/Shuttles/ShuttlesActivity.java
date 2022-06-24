@@ -106,7 +106,7 @@ public class ShuttlesActivity extends AppCompatActivity implements OnMapReadyCal
 
         boolean addedSuccesfully = InformationHandler.initializeInformation(getBaseContext());
 
-        cb = findViewById(R.id.currentLocationCB);
+        cb = findViewById(R.id.shuttlesCurrentLocationCB);
         closestButton = (Button)findViewById(R.id.closestBT);
         closestButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -535,7 +535,7 @@ public class ShuttlesActivity extends AppCompatActivity implements OnMapReadyCal
 
     //if the location permission is enabled - initializing the current location and some settings
     private void enableLocation(){
-        CheckBox cb = findViewById(R.id.currentLocationCB);
+        CheckBox cb = findViewById(R.id.shuttlesCurrentLocationCB);
 
         //if the location permission accepted - allowing to use the current location
         if(PermissionsManager.areLocationPermissionsGranted(this))
