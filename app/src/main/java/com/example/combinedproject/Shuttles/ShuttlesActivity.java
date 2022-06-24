@@ -399,10 +399,6 @@ public class ShuttlesActivity extends AppCompatActivity implements OnMapReadyCal
             Date currentTime = sdf.parse(currentDateTimeString);
            // Date statingTime = sdf.parse(ShuttleStatingTime); ERROR
 
-            Toast.makeText(getBaseContext(), currentDateTimeString,
-                    Toast.LENGTH_SHORT).show();
-
-
             String substring = currentDateTimeString.substring(Math.max(currentDateTimeString.length() - 2, 0));
             if(currentDateTimeString.contains("PM")) {
                 int i = 0;
@@ -443,14 +439,18 @@ public class ShuttlesActivity extends AppCompatActivity implements OnMapReadyCal
                     //expectedArrivalTime add the num of miliseconds
                     double updatedTimeInMilliseconds = sdf.parse(currentDateTimeString).getTime() + timeUntilStationMilliseconds;
                     Date updatedTimeDate = new Date((long)updatedTimeInMilliseconds);
-                    Toast.makeText(getBaseContext(), "after " + markerInfo.getName().split(" ")[3] + " milisecs left:" + String.valueOf(timeUntilStationMilliseconds/60000) + " expected arrival time:" + sdf.format(updatedTimeDate),
+                    Toast.makeText(getBaseContext(), "Expexted time left for arrival:" + String.valueOf(timeUntilStationMilliseconds/60000) + " minutes",
+                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Expected arrival time:" + sdf.format(updatedTimeDate),
                             Toast.LENGTH_LONG).show();
                 }
                 else {
                     double timeUntilStationMilliseconds = (selectedStationNumber*(ShuttleLoopTimeInMillisecond/17)) - millisecondsInCurrentLoop;
                     double updatedTimeInMilliseconds = sdf.parse(currentDateTimeString).getTime() + timeUntilStationMilliseconds;
                     Date updatedTimeDate = new Date((long)updatedTimeInMilliseconds);
-                    Toast.makeText(getBaseContext(), "before " + markerInfo.getName().split(" ")[3] + " milisecs left:" +  (String.valueOf(timeUntilStationMilliseconds/60000))  + " expected arrival time:" + sdf.format(updatedTimeDate),
+                    Toast.makeText(getBaseContext(), "Expexted time left for arrival:" + String.valueOf(timeUntilStationMilliseconds/60000) + " minutes",
+                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Expected arrival time:" + sdf.format(updatedTimeDate),
                             Toast.LENGTH_LONG).show();
                 }
             }
