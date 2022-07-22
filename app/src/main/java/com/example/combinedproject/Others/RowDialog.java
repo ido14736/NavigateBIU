@@ -60,6 +60,21 @@ public class RowDialog extends AppCompatDialogFragment {
                         }
                     });
             addToFavorites = view.findViewById(R.id.button);
+            // case of information ALREADY IN the user's favorite's table db
+            if(myDB.doesFavoriteExists(username, this.name)) {
+                Toast.makeText(context, "Already in favorites.",
+                        Toast.LENGTH_LONG).show();
+                //TO-DO: delete the info from favorites
+                addToFavorites.setText("הסרה מהמועדפים");
+
+            }
+            // case of information NOT IN the user's favorite's table db
+            else {
+                Toast.makeText(context, "Added to favorites.",
+                        Toast.LENGTH_LONG).show();
+                addToFavorites.setText("הוספה למועדפים");
+            }
+//            addToFavorites.setText("הוספה למועדפים");
             // #### INSTEAD OF THE 2ND PARAMETER, I CAN HAVE AN INFORMATION VAR,
             // AND IN THE METHOD - SEND OT TO THE DB: for now, just testing it, using print
             setOnClick(addToFavorites, this.name);
@@ -92,16 +107,21 @@ public class RowDialog extends AppCompatDialogFragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //System.out.println(username + " " + str);
+                // case of information ALREADY IN the user's favorite's table db
                 if(myDB.doesFavoriteExists(username, str)) {
+                    //TO-DO: delete the info from favorites
+                    myDB.removeFavorite(username, str);
                     Toast.makeText(context, "Already in favorites.",
                             Toast.LENGTH_LONG).show();
+                    btn.setText("הוספה למועדפים");
 
                 }
+                // case of information NOT IN the user's favorite's table db
                 else {
-                    myDB.addFavorite(username, str);
+                    myDB.addFavorite(username, str); // add
                     Toast.makeText(context, "Added to favorites.",
                             Toast.LENGTH_LONG).show();
+                    btn.setText("הסרה מהמועדפים");
                 }
 
 

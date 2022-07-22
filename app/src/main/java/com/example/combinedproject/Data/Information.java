@@ -1,14 +1,14 @@
 package com.example.combinedproject.Data;
-
 import com.mapbox.mapboxsdk.geometry.LatLng;
 
+//an Information about an service on campus(marker data)
 public class Information {
     private LatLng position;
     private String type;
     private String name;
     private String description;
-    // add image
 
+    //constructor
     public Information(LatLng position, String type, String name, String description)
     {
         this.position = position;
@@ -17,6 +17,7 @@ public class Information {
         this.description = description;
     }
 
+    //compare to an input Information
     public boolean comapre(Information information) {
         if (this.position.equals(information.getPosition()) &&
                 this.type.equals(information.getType()) &&
@@ -27,6 +28,7 @@ public class Information {
         return false;
     }
 
+    //getters
 
     public LatLng getPosition() {
         return position;

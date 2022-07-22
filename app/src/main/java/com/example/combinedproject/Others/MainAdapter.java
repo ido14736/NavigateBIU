@@ -99,7 +99,7 @@ public class MainAdapter extends BaseExpandableListAdapter {
         ImageView serviceIcon = (ImageView) convertView.findViewById(R.id.parent_icon);
         // this is an example. I need a switch-case regarding each service
 
-        String type = InformationHandler.getTypeByServiceName(group.getName());
+        String type = InformationHandler.getEnglishTypeByHebrewType(group.getName());
         int drawableId = context.getResources().getIdentifier(type, "drawable", context.getPackageName());
 
         serviceIcon.setImageResource(drawableId);

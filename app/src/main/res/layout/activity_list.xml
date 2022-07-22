@@ -20,7 +20,5 @@
         android:layout_above="@+id/Service_to_navigation">
     </ExpandableListView>
 
-
-
 </RelativeLayout>
     

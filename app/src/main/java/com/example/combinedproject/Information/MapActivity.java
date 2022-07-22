@@ -67,7 +67,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
 
         List<String> typesNames = new ArrayList<String>();
-        Collections.addAll(typesNames, InformationHandler.getServices_names());
+        Collections.addAll(typesNames, InformationHandler.getHebrew_types());
         typesNames.add("מועדפים");
 
         Spinner spinner = findViewById(R.id.typeSP);
@@ -245,7 +245,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedType = InformationHandler.getTypeByServiceName(spinner.getSelectedItem().toString());
+                String selectedType = InformationHandler.getEnglishTypeByHebrewType(spinner.getSelectedItem().toString());
                 /*if(currentSelectedMarker != null) {
                     if(selectedType != "All" && selectedType != InformationHandler.getInfoByIndex(markersOnMap.getMarkerIndexById(currentSelectedMarker.getId())).getType()) {
                         currentSelectedMarker = null;

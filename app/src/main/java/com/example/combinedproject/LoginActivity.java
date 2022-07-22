@@ -2,7 +2,6 @@ package com.example.combinedproject;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.combinedproject.Data.DatabaseHandler;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -24,13 +22,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
+//the login activity
 public class LoginActivity extends AppCompatActivity {
-
     private static DatabaseHandler myDB;
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
     ImageView googleBtn;
 
+    //creating the activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,29 +41,30 @@ public class LoginActivity extends AppCompatActivity {
         TextView password =(TextView) findViewById(R.id.passwordET);
 
         Button login = (Button) findViewById(R.id.loginBT);
-        //admin and admin
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getBaseContext(), username.getText().toString() + " " + password.getText().toString(),
-                //        Toast.LENGTH_LONG).show();
+                //if the user didn't enter a username or a password
                 if(username.getText().toString().equals("") || password.getText().toString().equals("")) {
                     Toast.makeText(getBaseContext(), "Username or password missing.",
                             Toast.LENGTH_LONG).show();
                 }
 
                 else {
+                    //checking if the entered username and password exists
                     Pair<Boolean, Pair<String,String>> result = myDB.doesAccountExists(username.getText().toString(), password.getText().toString());
+
+                    //if exists - starting the main menu
                     if(result.first) {
-                            //Toast.makeText(getBaseContext(), "exists",
-                            //        Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplicationContext(), com.example.combinedproject.MainActivity.class);
                             intent.putExtra("name", result.second.first);
                             intent.putExtra("user_type", result.second.second);
                             intent.putExtra("username", username.getText().toString());
                             startActivityForResult(intent, 1);
                     }
+
+                    //if doesn't exist
                     else {
                             Toast.makeText(getBaseContext(), "Wrong username or password.",
                                 Toast.LENGTH_LONG).show();
@@ -74,43 +74,21 @@ public class LoginActivity extends AppCompatActivity {
                     password.setText("");
 
                 }
-                //if(myDB.doesUserExists(username.getText().toString(), "admin", "regular")) {
-                //    Toast.makeText(getBaseContext(), "exists",
-                //            Toast.LENGTH_LONG).show();
-                //}
-                //else {
-                //    Toast.makeText(getBaseContext(), "doesn't exist",
-                //            Toast.LENGTH_LONG).show();
-                //}
             }
         });
 
-        //check if internet is available
-        ConnectivityManager connectivityManager = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
-            //we are connected to a network
-            Toast.makeText(getBaseContext(), "internet",
-                    Toast.LENGTH_LONG).show();
-
-        }
-        else
-            Toast.makeText(getBaseContext(), "no internet",
-                    Toast.LENGTH_LONG).show();
-
         Button signup = (Button) findViewById(R.id.signupBT);
-        //admin and admin
 
+        //if the user chose to sign up - starting the sign up activity
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getBaseContext(), username.getText().toString() + " " + password.getText().toString(),
-                //        Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(getApplicationContext(), com.example.combinedproject.SignupActivity.class);
                 startActivityForResult(intent, 1);
             }
         });
 
+        //handling signing up with google
         googleBtn = findViewById(R.id.googleSignIn);
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
@@ -129,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivityForResult(signInIntent,1000);
     }
 
+    //signing in with an google account
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -147,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                     String googleName = acct.getDisplayName();
                     String googleEmail = acct.getEmail();
 
+                    //
                     if(!myDB.doesUserExists(googleEmail, "regular")) {
                         boolean result = myDB.createAccount(googleEmail, "", googleName, "regular", "google");
 
@@ -156,18 +136,14 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }
 
+                    //starting the main menu after signing in
                     Intent intent = new Intent(getApplicationContext(), com.example.combinedproject.MainActivity.class);
                     intent.putExtra("name", googleName);
                     intent.putExtra("user_type", "regular");
                     intent.putExtra("username", googleEmail);
                     startActivityForResult(intent, 1);
-                    //Toast.makeText(getBaseContext(), personName + " " + personEmail,
-                    //        Toast.LENGTH_LONG).show();
-
                 }
 
-                //Intent intent = new Intent(getApplicationContext(), com.example.combinedproject.MainActivity.class);
-                //startActivityForResult(intent, 1);
             } catch (ApiException e) {
                 Toast.makeText(getApplicationContext(), "Something went wrong with google sign in. Try checking your internet connection.", Toast.LENGTH_LONG).show();
             }
