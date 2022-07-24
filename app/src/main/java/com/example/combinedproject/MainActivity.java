@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.combinedproject.Navigation.BIUNavigationActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -16,26 +14,26 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+//the main menu activity
 public class MainActivity extends AppCompatActivity {
 
     Button nav, inf, shu, disconnect, admin;
-    //GoogleSignInOptions gso;
-    //GoogleSignInClient gsc;
 
+    //creating the activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //getting data from the previous activity
         String name = getIntent().getExtras().getString("name");
         TextView welcome = findViewById(R.id.welcomeET);
         welcome.setText("Welcome " + name);
-        //Toast.makeText(getBaseContext(), name,
-        //        Toast.LENGTH_LONG).show();
 
         String username = getIntent().getExtras().getString("username");
-
         String connType = getIntent().getExtras().getString("user_type");
+
+        //click listener for the admin options button
         admin = findViewById(R.id.adminOptionsBT);
         admin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //if the connected user isn't admin - hiding the admin options button
         if(connType.equals("admin")) {
             admin.setVisibility(View.VISIBLE);
 
@@ -54,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         inf = findViewById(R.id.informationButton);
         shu = findViewById(R.id.shuttlesButton);
 
+        //click listener for the navigation button
         nav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //click listener for the information button
         inf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //click listener for the shuttles options button
         shu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,9 +83,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //click listener for the sign out button - closing the current activity and returning to the log in
+        //if a user that connected with google signed out - disconnecting from it's account
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         GoogleSignInClient gsc = GoogleSignIn.getClient(this,gso);
-
         disconnect = findViewById(R.id.disconnectBT);
         disconnect.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,13 +99,5 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
-
-//
-        //GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-        //if(acct!=null){
-        //    String personName = acct.getDisplayName();
-        //    String personEmail = acct.getEmail();
-        //
-        //}
     }
 }

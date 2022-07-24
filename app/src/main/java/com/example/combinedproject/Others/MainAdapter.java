@@ -154,10 +154,6 @@ public class MainAdapter extends BaseExpandableListAdapter {
                     openDialog(child);
                 }
 
-               //Toast.makeText(finalConvertView.getContext(), child.getDescription(),
-               //        Toast.LENGTH_LONG).show();
-
-
             }
         });
 

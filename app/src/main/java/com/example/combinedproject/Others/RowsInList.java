@@ -31,7 +31,6 @@ public class RowsInList {
     private Context c;
     private FragmentManager fm;
     ExpandableListView myList;
-    Button FromServiceToMap;
     SearchManager searchManager;
     private String username;
 
@@ -56,21 +55,19 @@ public class RowsInList {
     List<Information> favorites;
 
     //constructor
-    public RowsInList(Context c, FragmentManager fm, String username, ExpandableListView e, Button button, SearchManager manager)
+    public RowsInList(Context c, FragmentManager fm, String username, ExpandableListView e, SearchManager manager)
     {
         /* input data */
         this.c = c;
         this.fm = fm;
         myList = e; // myList
         this.username = username;
-        FromServiceToMap = button;
         searchManager = manager;
         services = new ArrayList<Service>();  // parentList
         showTheseParentList = new ArrayList<Service>();
         displayList();
 //        expandAll();
         // the button shall appear only after a service has been selected
-        FromServiceToMap.setVisibility(GONE);
 
     }
 
@@ -107,7 +104,6 @@ public class RowsInList {
                 view.setBackgroundColor(Color.RED);
 
 //                Information info = services_lists.get(services[groupPosition]).get(childPosition);
-                FromServiceToMap.setVisibility(View.VISIBLE);
                 //System.out.println(info.getDescription());
                 return false;
             }

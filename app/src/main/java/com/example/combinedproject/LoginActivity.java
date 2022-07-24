@@ -2,11 +2,7 @@ package com.example.combinedproject;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
@@ -102,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //sending a request to sign in
     public void googleSignIn() {
         Intent signInIntent = gsc.getSignInIntent();
         startActivityForResult(signInIntent,1000);
@@ -112,22 +109,30 @@ public class LoginActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        //a request to sign in
         if(requestCode == 1000){
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
             try {
                 task.getResult(ApiException.class);
 
+                //configure sign in to request the google account
                 gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
+
+                //build a GoogleSignInClient with the options specified by gso
                 gsc = GoogleSignIn.getClient(this,gso);
 
+                //checking for existing google account
+                //if the user signed in before - acct will be != null
                 GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
                 if(acct!=null) {
+                    //get data from the account
                     String googleName = acct.getDisplayName();
                     String googleEmail = acct.getEmail();
 
-                    //
-                    if(!myDB.doesUserExists(googleEmail, "regular")) {
+                    //checking if user doesn't exist in the DB
+                    if(!myDB.doesUserExists(googleEmail, "google")) {
+                        //adding the account to the DB
                         boolean result = myDB.createAccount(googleEmail, "", googleName, "regular", "google");
 
                         if (result) {
