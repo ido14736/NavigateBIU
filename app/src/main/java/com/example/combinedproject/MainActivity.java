@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         //getting data from the previous activity
         String name = getIntent().getExtras().getString("name");
         TextView welcome = findViewById(R.id.welcomeET);
-        welcome.setText("Welcome " + name);
+        welcome.setText("Welcome, " + name + "\n");
 
         String username = getIntent().getExtras().getString("username");
         String connType = getIntent().getExtras().getString("user_type");

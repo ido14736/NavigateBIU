@@ -3,11 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/drawable/coffee.xml" value="0.1" />
         <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/drawable/parking.xml" value="0.1" />
         <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/activity_admin_options.xml" value="0.10677083333333333" />
         <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/activity_biu_navigation.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/activity_list.xml" value="0.1" />
-        <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/activity_login.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/activity_map.xml" value="0.12" />
         <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/activity_navigation.xml" value="0.1" />
@@ -33,5 +34,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.1" />
+      </ProjectState>
+    </option>
   </component>
 </project>
