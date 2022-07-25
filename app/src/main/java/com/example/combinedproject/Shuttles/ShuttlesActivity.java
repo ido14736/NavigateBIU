@@ -454,7 +454,6 @@ public class ShuttlesActivity extends AppCompatActivity implements OnMapReadyCal
         for (Layer la : layers) {
             if(la.getId().contains("poi-scalerank"))
             {
-                System.out.println(la.getId());
                 map.removeLayer(la.getId());
             }
         }

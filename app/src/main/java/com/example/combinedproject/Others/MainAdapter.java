@@ -113,8 +113,6 @@ public class MainAdapter extends BaseExpandableListAdapter {
             convertView = layoutInflater.inflate(R.layout.child_row, null);
         }
 
-
-
         final TextView textView = convertView.findViewById(R.id.child_text);
         textView.setText(child.getName());
 
@@ -123,13 +121,16 @@ public class MainAdapter extends BaseExpandableListAdapter {
             // show pop up with the description
             @Override
             public void onClick(View v) {
+                //if a service is selected
                 if(currentSelectedItem != null) {
+                    //if we clicked on the selected service
                     if(child.comapre(currentSelectedItem)) {
                         currentSelectedItem = null;
                         currentSelectedItemView = null;
                         v.setBackgroundColor(Color.WHITE);
                     }
 
+                    //if we clicked on other service
                     else {
                         currentSelectedItemView.setBackgroundColor(Color.WHITE);
                         currentSelectedItem = child;
@@ -139,6 +140,7 @@ public class MainAdapter extends BaseExpandableListAdapter {
                     }
                 }
 
+                //if no service is selected
                 else {
                     //android.graphics.drawable.Drawable d = v.getBackground();
                     currentSelectedItem = child;

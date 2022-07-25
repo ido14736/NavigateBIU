@@ -350,7 +350,6 @@ public class BIUNavigationActivity extends AppCompatActivity implements OnMapRea
         for (Layer la : layers) {
             if(la.getId().contains("poi-scalerank"))
             {
-                System.out.println(la.getId());
                 map.removeLayer(la.getId());
             }
         }
