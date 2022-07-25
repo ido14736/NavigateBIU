@@ -4,6 +4,7 @@
 - internet connection
 - GPS connection
 - gradle JDK version 11(in android studio: File -> Settings -> Build,Execution,Deployment -> Build Tools -> Gradle and make sure that Gradle JDK is in version 11)
-### Description
+### Summary
+in our project
 
 
