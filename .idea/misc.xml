@@ -14,11 +14,17 @@
         <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/activity_shuttles.xml" value="0.1" />
         <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/activity_signup.xml" value="0.1" />
         <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/child_row.xml" value="0.1" />
+        <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/content_login.xml" value="0.13645833333333332" />
+        <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/fragment_first.xml" value="0.14791666666666667" />
+        <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/fragment_second.xml" value="0.14791666666666667" />
+        <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/layout_dialog.xml" value="0.14791666666666667" />
         <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/list_group.xml" value="0.1" />
         <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/list_item.xml" value="0.1" />
+        <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/list_layout_dialog.xml" value="0.13645833333333332" />
         <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/my_dropdown_item.xml" value="0.1" />
         <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/my_selected_item.xml" value="0.1" />
         <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/parent_row.xml" value="0.1" />
+        <entry key="..\:/Users/magshimim/combinedProject/app/src/main/res/layout/shuttles_layout_dialog.xml" value="0.14791666666666667" />
       </map>
     </option>
   </component>

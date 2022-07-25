@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 /* This class is in-charge of opening the dialog, that'll appear when Information is clicked.
 *  We create a dialog builder, to build a dialog */
 
-public class RowDialog extends AppCompatDialogFragment {
+public class ListRowDialog extends AppCompatDialogFragment {
 
     private final Context context;
     private final String name; // The Info's Name for appearing as the title
@@ -33,7 +33,7 @@ public class RowDialog extends AppCompatDialogFragment {
 
 
     // constructor:
-    public RowDialog(Context c, String Name, String username, String description){
+    public ListRowDialog(Context c, String Name, String username, String description){
         this.context = c;
         this.name = Name;
         this.description = description;
@@ -49,7 +49,7 @@ public class RowDialog extends AppCompatDialogFragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             // inflate the view for the dialog:
             LayoutInflater inflater = getActivity().getLayoutInflater();
-            View view = inflater.inflate(R.layout.layout_dialog, null); // maybe instead of null, put the menu dialog
+            View view = inflater.inflate(R.layout.list_layout_dialog, null); // maybe instead of null, put the menu dialog
             builder.setView(view);
 
             builder.setTitle(this.name)

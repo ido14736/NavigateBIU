@@ -87,6 +87,7 @@
         android:id="@+id/adminConfirmBT"
         android:layout_below="@id/fifthET"
         android:text="Confirm"
+        android:textColor="@color/black"
         android:backgroundTint="@color/design_default_color_secondary"
         android:layout_centerHorizontal="true"
         android:layout_margin="20dp"

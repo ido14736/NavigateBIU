@@ -1,28 +1,21 @@
 package com.example.combinedproject.Others;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.combinedproject.Data.Information;
 import com.example.combinedproject.Data.InformationHandler;
 import com.example.combinedproject.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
 public class MainAdapter extends BaseExpandableListAdapter {
@@ -142,7 +135,7 @@ public class MainAdapter extends BaseExpandableListAdapter {
                         currentSelectedItem = child;
                         currentSelectedItemView = v;
                         v.setBackgroundColor(0xFF00FF00);
-                        openDialog(child);
+                        openListDialog(child);
                     }
                 }
 
@@ -151,20 +144,18 @@ public class MainAdapter extends BaseExpandableListAdapter {
                     currentSelectedItem = child;
                     currentSelectedItemView = v;
                     v.setBackgroundColor(0xFF00FF00);
-                    openDialog(child);
+                    openListDialog(child);
                 }
 
             }
         });
-
         return convertView;
-
     }
 
-    /* this method calls the RowDialog's 'show' method for uploading the dialog*/
-    private void openDialog(Information child) {
-        RowDialog rowDialog = new RowDialog(this.context, child.getName(), username, child.getDescription());
-        rowDialog.show(this.fm, "Dialog");
+    /* this method calls the ListRowDialog's 'show' method for uploading the dialog*/
+    private void openListDialog(Information child) {
+        ListRowDialog listRowDialog = new ListRowDialog(this.context, child.getName(), username, child.getDescription());
+        listRowDialog.show(this.fm, "Dialog");
     }
 
     public Information getSelectedItem() {

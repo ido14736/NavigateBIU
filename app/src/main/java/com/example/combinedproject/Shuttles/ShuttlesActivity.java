@@ -8,7 +8,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import com.example.combinedproject.Data.Information;
 import com.example.combinedproject.Data.InformationHandler;
+import com.example.combinedproject.Others.ListRowDialog;
 import com.example.combinedproject.Others.MarkersOnMap;
+import com.example.combinedproject.Others.ShuttlesRowDialog;
 import com.example.combinedproject.R;
 import com.mapbox.android.core.location.LocationEngine;
 import com.mapbox.android.core.location.LocationEngineListener;
@@ -342,6 +344,7 @@ public class ShuttlesActivity extends AppCompatActivity implements OnMapReadyCal
     //when clicking on a marker on the map
     public boolean handleMarkerClick(Marker marker) throws ParseException {
         Information markerInfo = InformationHandler.getInfoByIndex(markersOnMap.getMarkerIndexById(marker.getId()));
+        String stationName = markerInfo.getName();
         if(markerInfo != null)
         {
             boolean calculateTime = true;
@@ -385,37 +388,59 @@ public class ShuttlesActivity extends AppCompatActivity implements OnMapReadyCal
 
             //if the current time and day are valid - calculating the arrival time of the shuttle to the chosen station
             if(calculateTime) {
+                //the difference in millis between the starting time and the current time
                 long differentInMilliseconds = sdf.parse(currentDateTimeString).getTime() - sdf.parse(ShuttleStatingTime).getTime();
+
+                //the number of done loops
                 double numOfDoneLoops = Math.floor(differentInMilliseconds/ShuttleLoopTimeInMillisecond);
 
+                //the number of millis in the current loop
                 double millisecondsInCurrentLoop = differentInMilliseconds - (numOfDoneLoops*ShuttleLoopTimeInMillisecond);
 
-                int selectedStationNumber = Integer.valueOf(markerInfo.getName().split(" ")[3]);
+                //getting the station number
+                int selectedStationNumber = Integer.valueOf(stationName.split(" ")[3]);
 
+                //if the shuttle passed the selected station in the current loop
+                //the time left for arrival will be:
+                //the time of a full loop - the time in the current loop + the time to reach the selected station from the start of a loop
                 if(millisecondsInCurrentLoop > selectedStationNumber*(ShuttleLoopTimeInMillisecond/17)) {
+                    //calculating the time left for arrival and the arrival time
                     double timeUntilStationMilliseconds = ShuttleLoopTimeInMillisecond - millisecondsInCurrentLoop + (selectedStationNumber*(ShuttleLoopTimeInMillisecond/17));
-                    //expectedArrivalTime add the num of miliseconds
                     double updatedTimeInMilliseconds = sdf.parse(currentDateTimeString).getTime() + timeUntilStationMilliseconds;
                     Date updatedTimeDate = new Date((long)updatedTimeInMilliseconds);
-                    Toast.makeText(getBaseContext(), "Expexted time left for arrival:" + String.valueOf(timeUntilStationMilliseconds/60000) + " minutes",
-                            Toast.LENGTH_LONG).show();
-                    Toast.makeText(getBaseContext(), "Expected arrival time:" + sdf.format(updatedTimeDate),
-                            Toast.LENGTH_LONG).show();
+
+                    int seconds = (int) (timeUntilStationMilliseconds / 1000) % 60 ;
+                    int minutes = (int) ((timeUntilStationMilliseconds / (1000*60)) % 60);
+
+                    //displaying the results
+                    openShuttlesDialog(stationName, sdf.format(updatedTimeDate), String.valueOf(minutes) + " Minutes and " + String.valueOf(seconds) + " Seconds");
                 }
+
+                //if the shuttle didn't reach the selected station in the current loop
+                //the time left for arrival will be:
+                //the time to reach the selected station - the time in the current loop
                 else {
+                    //calculating the time left for arrival and the arrival time
                     double timeUntilStationMilliseconds = (selectedStationNumber*(ShuttleLoopTimeInMillisecond/17)) - millisecondsInCurrentLoop;
                     double updatedTimeInMilliseconds = sdf.parse(currentDateTimeString).getTime() + timeUntilStationMilliseconds;
                     Date updatedTimeDate = new Date((long)updatedTimeInMilliseconds);
-                    Toast.makeText(getBaseContext(), "Expexted time left for arrival:" + String.valueOf(timeUntilStationMilliseconds/60000) + " minutes",
-                            Toast.LENGTH_LONG).show();
-                    Toast.makeText(getBaseContext(), "Expected arrival time:" + sdf.format(updatedTimeDate),
-                            Toast.LENGTH_LONG).show();
+
+                    int seconds = (int) (timeUntilStationMilliseconds / 1000) % 60 ;
+                    int minutes = (int) ((timeUntilStationMilliseconds / (1000*60)) % 60);
+
+                    //displaying the results
+                    openShuttlesDialog(stationName, sdf.format(updatedTimeDate), String.valueOf(minutes) + " Minutes and " + String.valueOf(seconds) + " Seconds");
                 }
             }
-
             return true;
         }
         return false;
+    }
+
+    /* this method calls the ShuttlesRowDialog's 'show' method for uploading the dialog*/
+    private void openShuttlesDialog(String name, String arrivalTime, String timeLeft) {
+        ShuttlesRowDialog shuttlesRowDialog = new ShuttlesRowDialog(getBaseContext(), name, arrivalTime, timeLeft);
+        shuttlesRowDialog.show(getSupportFragmentManager(), "Dialog");
     }
 
     //when the map is ready

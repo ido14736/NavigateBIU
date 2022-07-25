@@ -20,6 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/welcomeET"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/design_default_color_secondary"
         android:text="navigation"
         />
     <Button
@@ -27,6 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/navigationButton"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/design_default_color_secondary"
         android:text="information"
         />
     <Button
@@ -34,6 +38,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/informationButton"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/design_default_color_secondary"
         android:text="shuttles"
         />
     <Button
@@ -41,6 +47,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/shuttlesButton"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/design_default_color_secondary"
         android:text="admin"
         android:visibility="invisible"
         />
@@ -49,6 +57,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/adminOptionsBT"
+        android:textColor="@color/black"
+        android:backgroundTint="@color/design_default_color_secondary"
         android:text="disconnect"
         />
 
