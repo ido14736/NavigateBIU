@@ -5,9 +5,9 @@
 - internet connection
 - GPS connection(recommended)
 ### Summary
-Our project provides many ways to know the way around(להתמצא) Bar Illan University. It contains:
+Our project provides many ways to know your way around at Bar Ilan University. It contains:
 - Navigation - choose a destination in the area of the campus and navigate to it
-- Information - choose a service on campus from the map of from a list and get a good description about it
+- Information - choose a service on campus from the map or from a list, and get a good description about it
 - Shuttles - display a route to the closest shuttle station to your current location, get the estimated arrival time of the shuttle to a station of your choice
 
 
