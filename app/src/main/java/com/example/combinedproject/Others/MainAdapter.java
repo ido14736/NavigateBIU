@@ -121,34 +121,36 @@ public class MainAdapter extends BaseExpandableListAdapter {
             // show pop up with the description
             @Override
             public void onClick(View v) {
-                //if a service is selected
-                if(currentSelectedItem != null) {
-                    //if we clicked on the selected service
-                    if(child.comapre(currentSelectedItem)) {
-                        currentSelectedItem = null;
-                        currentSelectedItemView = null;
-                        v.setBackgroundColor(Color.WHITE);
+                if(textView.getText().equals(child.getName())){
+                    //if a service is selected
+                    if(currentSelectedItem != null) {
+                        //if we clicked on the selected service
+                        if(child.comapre(currentSelectedItem)) {
+                            currentSelectedItem = null;
+                            currentSelectedItemView = null;
+                            v.setBackgroundColor(Color.WHITE);
+                        }
+
+                        //if we clicked on other service
+                        else {
+                            currentSelectedItemView.setBackgroundColor(Color.WHITE);
+                            currentSelectedItem = child;
+                            currentSelectedItemView = v;
+                            textView.setBackgroundColor(0xFF00FF00);
+                            openListDialog(child);
+                        }
                     }
 
-                    //if we clicked on other service
+                    //if no service is selected
                     else {
-                        currentSelectedItemView.setBackgroundColor(Color.WHITE);
+                        //android.graphics.drawable.Drawable d = v.getBackground();
                         currentSelectedItem = child;
                         currentSelectedItemView = v;
-                        v.setBackgroundColor(0xFF00FF00);
+                        textView.setBackgroundColor(0xFF00FF00);
                         openListDialog(child);
                     }
-                }
 
-                //if no service is selected
-                else {
-                    //android.graphics.drawable.Drawable d = v.getBackground();
-                    currentSelectedItem = child;
-                    currentSelectedItemView = v;
-                    v.setBackgroundColor(0xFF00FF00);
-                    openListDialog(child);
                 }
-
             }
         });
         return convertView;
