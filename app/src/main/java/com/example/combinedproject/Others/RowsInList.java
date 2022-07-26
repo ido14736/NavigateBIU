@@ -1,43 +1,32 @@
 package com.example.combinedproject.Others;
-
-import static android.view.View.GONE;
-
-import android.app.SearchManager;
 import android.content.Context;
 import android.graphics.Color;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.AdapterView;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
-
 import com.example.combinedproject.Data.Information;
 import com.example.combinedproject.Data.InformationHandler;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
+import androidx.appcompat.view.menu.ExpandedMenuView;
 import androidx.fragment.app.FragmentManager;
 
-/* this class is in-charge for initializing the lists from the DB, and
-* for the functionality of the menu-list */
+/** this class is in-charge for initializing the lists from the DB, and
+ * for the functionality of the menu-list */
+
 public class RowsInList {
 
     // constructor input
-    private Context c;
-    private FragmentManager fm;
+    private final Context c;
+    private final FragmentManager fm;
     ExpandableListView myList;
-    SearchManager searchManager;
-    private String username;
+    private final String username;
 
     // local lists
-    List<Service> services; // connection between category and his list
-    List<Service> showTheseParentList;
-    MainAdapter adapter; // in-charge of handling the logic behind the expandable list
+    List<Service> services; // connection between category (Service) and his list (of Information)
+    MainAdapter adapter; //  Loads the data into the items associated with 'myList'.
     // service's lists:
     List<Information> buildings;
     List<Information> libraries;
@@ -53,23 +42,25 @@ public class RowsInList {
     List<Information> restaurants;
     List<Information> coffee_shops;
     List<Information> favorites;
+    Information currentSelectedItem;  // for marking selected Information:
 
     //constructor
-    public RowsInList(Context c, FragmentManager fm, String username, ExpandableListView e, SearchManager manager)
+    public RowsInList(Context c, FragmentManager fm, String username, ExpandableListView e)
     {
         /* input data */
         this.c = c;
         this.fm = fm;
         myList = e; // myList
         this.username = username;
-        searchManager = manager;
-        services = new ArrayList<Service>();  // parentList
-        showTheseParentList = new ArrayList<Service>();
-        displayList();
-//        expandAll();
-        // the button shall appear only after a service has been selected
-
+        /* Initialize other variables: */
+        services = new ArrayList<Service>();
+        InitializeAndLoad();
+        // delete:
+        setOnInfoClickedListener();
+        currentSelectedItem = null;
     }
+
+    /* This method expands all the groups of the menu */
 
     public void expandAll() {
         int count = adapter.getGroupCount();
@@ -78,51 +69,31 @@ public class RowsInList {
         }
     }
 
-    private void displayList() {
+    /* This method collapses all the groups of the menu */
+
+    public void collapseAll() {
+        int count = adapter.getGroupCount();
+        for (int i = 0; i < count; i++) {
+            myList.collapseGroup(i);
+        }
+    }
+
+    /* This method initializes the list of Services, set's an adapter to work, and
+     * load the data from the DB into each service's list */
+
+    private void InitializeAndLoad() {
         addListToService();
+        initializeLists();
         adapter = new MainAdapter(c, fm, username, services);
         myList.setAdapter(adapter);
-        initializeLists();
-        // set adapter and expandable objects, and initialize the lists
-
-
+        adapter.notifyDataSetChanged();
     }
-
-    /* this method set's listener for the children when they are clicked  */
-    public void setOnServiceClickedListener() {
-        this.myList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View view, int groupPosition,
-                                        int childPosition, long id) {
-//                int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild
-//                        (groupPosition, childPosition));
-//                parent.setItemChecked(index, true);
-                for (int i = 1; i < myList.getChildCount(); i++) {
-                    View child = (View) myList.getChildAt(i);
-                    child.setBackgroundColor(Color.WHITE);
-                }
-                view.setBackgroundColor(Color.RED);
-
-//                Information info = services_lists.get(services[groupPosition]).get(childPosition);
-                //System.out.println(info.getDescription());
-                return false;
-            }
-        });
-    }
-
-
-    public Information getSelectedItem() {
-        return adapter.getSelectedItem();
-    }
-
-
 
     /* this method loops over the data from the information handler, and adds to right list - based
-    * on type */
+     * on type */
+
     public void initializeLists() {
-        Information current;
         for (int i = 0; i < InformationHandler.getSize(); i++) {
-            current = InformationHandler.getInfoByIndex(i);
             String type = InformationHandler.getInfoByIndex(i).getType();
             // based on the current row's type - enter the name to the right list
             switch(type){
@@ -164,25 +135,17 @@ public class RowsInList {
                     break;
                 case "parking":
                     parking_spots.add(InformationHandler.getInfoByIndex(i));
-
-                //System.out.println("ido" + InformationHandler.getInfoByIndex(i).getName());
-
             }
-
+            // if current information is already in the favorite table -
+            // add him to the favorites list
             if(InformationHandler.doesInfoInFavorites(username, InformationHandler.getInfoByIndex(i).getName())) {
                 favorites.add(InformationHandler.getInfoByIndex(i));
             }
-
-
         }
-
-
-        adapter.notifyDataSetChanged();
-
     }
 
-    /* this method set's a list of Information for every Service
-    * TO-DO: as icon, pass the @drawable/correct icon */
+    /* This method set's a list of Information for every Service, with the correct icon */
+
     public void addListToService(){
         buildings = new ArrayList<Information>();
         services.add(new Service("בנייני לימוד", buildings, 1));
@@ -216,5 +179,40 @@ public class RowsInList {
 
     public MainAdapter getAdapter(){
         return this.adapter;
+    }
+
+    public Information getSelectedItem() {
+        return currentSelectedItem;
+    }
+
+    /* this method set's listener for the children when they are clicked:
+     *  It opens a dialog for the user  */
+
+    public void setOnInfoClickedListener() {
+        this.myList.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View view, int groupPosition,
+                                        int childPosition, long id) {
+
+                Information clicked = (Information) adapter.getChild(groupPosition, childPosition);
+
+                currentSelectedItem = clicked;
+                adapter.openDialog(clicked, favorites);
+                System.out.println(clicked.getName());
+                return true;
+
+            }
+        });
+
+        this.myList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView,
+                                        View view, int i, long l) {
+                System.out.println("parent selected");
+                view.setBackgroundColor(Color.WHITE);
+                currentSelectedItem = null;
+                return false;
+            }
+        });
     }
 }
